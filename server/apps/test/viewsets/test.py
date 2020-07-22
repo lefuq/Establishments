@@ -7,3 +7,4 @@ from apps.test.serializers import TestSerializer
 class TestViewSet(ModelViewSet):
     serializer_class = TestSerializer
     queryset = Test.objects.all()
+    http_method_names = ['get', 'post']
