@@ -6,4 +6,5 @@ from apps.test.models import Test
 class TestSerializer(ModelSerializer):
     class Meta:
         model = Test
-        fields = '__all__'
+        fields = ('id', 'name', 'random_string')
+        extra_kwargs = {'random_string':{'read_only': True}}
