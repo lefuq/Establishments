@@ -14,8 +14,6 @@ class DishSerializer(ModelSerializer):
             name = validated_data['name'],
             photo = validated_data['photo'],
             cost = validated_data['cost'],
-            ingredients = validated_data['ingredients'],)
-        dish.save()
-        est = validated_data['place'][0]
-        est.places.add(dish)
+            place = validated_data['place'])
+        dish.ingredients.set(validated_data['ingredients'])
         return dish

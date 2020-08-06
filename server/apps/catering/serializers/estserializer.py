@@ -22,4 +22,6 @@ class EstSerializer(ModelSerializer):
             coord = client.coordinates(validated_data['address'])
         except:
             return 'Введен некорректный адрес'
-        return Establishment.objects.create(coordinates=', '.join([str(i) for i in coord]), **validated_data)
+        return Establishment.objects.create(
+            coordinates=', '.join([str(i) for i in coord]),
+            **validated_data)

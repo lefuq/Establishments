@@ -1,12 +1,13 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
+from django.db.models import Sum
 
 from apps.catering.models.dish import Dish
 from apps.catering.models.ingredient import Ingredient
 
-
-@receiver(post_save, sender=Dish)
+@receiver(m2m_changed, sender=Dish.ingredients.through)
 def generate_total_callories(sender, instance, **kwargs):
-    if not instance.total_callories:
-        instance.total_callories = float(sum([Ingredient.objects.get(id=i).callories for i in instance.ingredients]))
-        instance.save()
+    instance.total_callories = (Dish.objects.get(pk=instance.id)
+                .ingredients.values_list('callories')
+                .aggregate(Sum('callories'))['callories__sum'])
+    return instance.save
