@@ -9,8 +9,8 @@ from apps.catering.secrets import yandex_api_key
 client = Client(yandex_api_key)
 
 class EstSerializer(ModelSerializer):
-    owner = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), default=serializers.CurrentUserDefault())
-    id = serializers.HiddenField(default=Establishment.objects.latest('id').id+1)
+    owner = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),
+    default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Establishment
@@ -18,8 +18,10 @@ class EstSerializer(ModelSerializer):
         read_only_fields = ('coordinates', 'avg_cost')
 
     def create(self, validated_data):
-        establishment = Establishment.objects.create(**validated_data)
-        coord = client.coordinates(establishment.address)
-        establishment.coordinates = ', '.join([str(i) for i in coord])
-        establishment.save()
-        return establishment
+        try:
+            coord = client.coordinates(validated_data['address'])
+        except:
+            return 'Введен некорректный адрес'
+        return Establishment.objects.create(
+            coordinates=', '.join([str(i) for i in coord]),
+            **validated_data)
