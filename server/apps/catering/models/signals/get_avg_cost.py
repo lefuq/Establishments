@@ -11,4 +11,4 @@ def generate_avg_cost(sender, instance, created, **kwargs):
         est = instance.place
         est.avg_cost = (Dish.objects.filter(place=est.id)
                 .aggregate(Avg('cost'))['cost__avg'])
-    return est.save()
+        return est.save()
