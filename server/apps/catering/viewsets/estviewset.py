@@ -1,5 +1,4 @@
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.mixins import UpdateModelMixin, ListModelMixin, CreateModelMixin
 from url_filter.integrations.drf import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from apps.main.permissions.permissions import IsOwnerOrReadOnly
