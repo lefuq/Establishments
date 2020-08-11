@@ -11,12 +11,12 @@ client = Client(yandex_api_key)
 
 class EstSerializer(ModelSerializer):
     owner = serializers.PrimaryKeyRelatedField(
-            queryset=User.objects.all(),
-            default=serializers.CurrentUserDefault()
-            )
+        queryset=User.objects.all(),
+        default=serializers.CurrentUserDefault(),
+        )
     dishes = serializers.HiddenField(
-            default = serializers.SerializerMethodField('get_dishes'),
-            )
+        default = serializers.SerializerMethodField('get_dishes'),
+        )
 
     class Meta:
         model = Establishment

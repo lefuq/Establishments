@@ -18,13 +18,3 @@ class DishSerializer(ModelSerializer):
             dish.total_callories += i.callories
         dish.save()
         return dish
-
-    def validate(self, data):
-        place = data['place']
-        if place.owner == self.context['request'].user:
-            return data
-        else:
-            raise NotAuthenticated(
-                detail='У Вас нет прав на создание блюд в указанном заведении.',
-                code=None,
-                )
