@@ -4,6 +4,12 @@ from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 
 class UserSerializer(ModelSerializer):
+    """Сериалайзер пользователя.
+    При создании пользователя помимо имени пользователя и пароля создается
+    токен для авторизации, который возвращается пользователю вместе с его
+    именем.
+
+    """
     token = serializers.SerializerMethodField('get_token')
 
     class Meta:
@@ -16,5 +22,13 @@ class UserSerializer(ModelSerializer):
         user.save()
         return user
 
-    def get_token(self, object):
-        return Token.objects.create(user=User.objects.latest('id')).key
+    def get_token(self, request):
+        """Создание токена при создании пользователя.
+        Отображение токена при просмотре списка пользователей (только
+        администраторы).
+
+        """
+        try:
+            return Token.objects.create(user=request).key
+        except:
+            return Token.objects.get(user=request).key
