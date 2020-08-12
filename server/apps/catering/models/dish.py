@@ -25,7 +25,6 @@ class Dish(models.Model):
     place = models.ForeignKey(
         Establishment,
         on_delete=models.CASCADE,
-        null=True
         )
 
     def __str__(self):
