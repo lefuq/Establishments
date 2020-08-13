@@ -22,13 +22,13 @@ class UserSerializer(ModelSerializer):
         user.save()
         return user
 
-    def get_token(self, request):
+    def get_token(self, user):
         """Создание токена при создании пользователя.
         Отображение токена при просмотре списка пользователей (только
         администраторы).
 
         """
         try:
-            return Token.objects.create(user=request).key
+            return Token.objects.create(user=user).key
         except:
-            return Token.objects.get(user=request).key
+            return Token.objects.get(user=user).key
