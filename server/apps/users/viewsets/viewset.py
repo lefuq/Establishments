@@ -42,3 +42,29 @@ class UserViewSet(GenericViewSet, CreateModelMixin, ListModelMixin):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
+
+    @swagger_auto_schema(
+        responses={201: openapi.Response(
+            'Создание пользователя и возвращает его имя и токен',
+            openapi.Schema(
+                title='Пользователь',
+                type=openapi.TYPE_OBJECT,
+                properties={
+                    'username': openapi.Schema(
+                        type=openapi.TYPE_STRING,
+                        title='Имя пользователя',
+                    ),
+                    'token': openapi.Schema(
+                        type=openapi.TYPE_STRING,
+                        title='Токен пользователя',
+                    ),
+                }
+            )
+        )
+        },
+    )
+    def create(self, request):
+        serializer = UserSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
