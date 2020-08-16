@@ -8,7 +8,8 @@ class Establishment(models.Model):
         help_text='Название заведения',)
     photo = models.ImageField(
         upload_to='place_photos',
-        help_text='Фотография заведения',)
+        help_text='Фотография заведения',
+        blank=True,)
     work_time = models.CharField(
         max_length=10,
         blank=True,
@@ -35,3 +36,6 @@ class Establishment(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['id']

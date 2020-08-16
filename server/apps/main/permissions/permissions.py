@@ -25,13 +25,13 @@ class IsEstOwnerOrReadOnly(permissions.BasePermission):
         """
         if request.method in permissions.SAFE_METHODS:
             return True
-        if request.method == 'POST':
+        if request.method in ['POST', 'PUT', 'PATCH', 'DELETE']:
             try:
                 est_id = int(request.POST.get('place'))
                 place = Establishment.objects.get(id=est_id)
             except:
                 return 'Указан некорректный id заведения при создании блюда.'
-        return place.owner == request.user
+            return place.owner == request.user
 
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
