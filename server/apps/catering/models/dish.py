@@ -10,7 +10,8 @@ class Dish(models.Model):
         help_text='Название блюда')
     photo = models.ImageField(
         upload_to='dish_photos',
-        help_text='Фото блюда',)
+        help_text='Фото блюда',
+        blank=True,)
     total_callories = models.DecimalField(
         max_digits=8,
         decimal_places=2,
@@ -38,3 +39,6 @@ class Dish(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['id']

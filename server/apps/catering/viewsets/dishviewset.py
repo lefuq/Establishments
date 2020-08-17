@@ -10,7 +10,7 @@ class DishViewSet(ModelViewSet):
     """Viewset для блюд.
     Создание и редактирование блюд доступно только владельцам заведений.
     Подключена фильтрация для url-запросов и запросов через api.
-    Просмот блюд доступен всем.
+    Просмотр блюд доступен всем.
 
     """
     permission_classes = [IsAuthenticatedOrReadOnly, IsEstOwnerOrReadOnly]
