@@ -7,6 +7,11 @@ from apps.catering.models.ingredient import Ingredient
 from apps.catering.serializers.ingrserial import IngrSerializer
 
 class IngrViewSet(GenericViewSet, ListModelMixin):
+    """Viewset ингредиентов.
+    Доступен только просмотр.
+    Подключена фильтрация для url-запросов и запросов через api.
+
+    """
     permission_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = IngrSerializer
     queryset = Ingredient.objects.all()

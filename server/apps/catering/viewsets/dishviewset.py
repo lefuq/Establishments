@@ -7,6 +7,12 @@ from apps.catering.models.dish import Dish
 from apps.catering.serializers.dishserial import DishSerializer
 
 class DishViewSet(ModelViewSet):
+    """Viewset для блюд.
+    Создание и редактирование блюд доступно только владельцам заведений.
+    Подключена фильтрация для url-запросов и запросов через api.
+    Просмот блюд доступен всем.
+
+    """
     permission_classes = [IsAuthenticatedOrReadOnly, IsEstOwnerOrReadOnly]
     serializer_class = DishSerializer
     queryset = Dish.objects.all()
