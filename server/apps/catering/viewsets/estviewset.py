@@ -6,6 +6,9 @@ from apps.main.permissions.permissions import IsOwnerOrReadOnly
 from apps.catering.models.establishments import Establishment
 from apps.catering.serializers.estserializer import EstSerializer
 
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+
 class EstViewSet(ModelViewSet):
     """Viewset для заведений.
     Создание заведений доступно только авторизованным пользователям.
@@ -19,3 +22,7 @@ class EstViewSet(ModelViewSet):
     queryset = Establishment.objects.all()
     filter_backends = [DjangoFilterBackend]
     filter_fields = '__all__'
+
+    @method_decorator(cache_page(60*15))
+    def dispatch(self, *args, **kwargs):
+        return super(EstViewSet, self).dispatch(*args, **kwargs)

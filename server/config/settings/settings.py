@@ -159,3 +159,19 @@ REST_FRAMEWORK = {
 
 if DEBUG:
     del REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES']
+
+##################################################################
+# Redis settings (with docker)
+##################################################################
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://redis:6379/0',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+
+CACHE_TTL = 60 * 15
