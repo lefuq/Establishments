@@ -1,5 +1,6 @@
 /client/build
-/server/staticfiles
+/server/static
+/server/config/migrations
 /server/media
 .DS_Store
 .idea
